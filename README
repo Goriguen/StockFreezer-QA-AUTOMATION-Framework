@@ -1,0 +1,112 @@
+# StockFreezer QA Automation Framework
+
+Framework de automatización de pruebas para [G-StockFreezer] — sistema de gestión de inventario gastronómico con integración de IA.
+
+Desarrollado por **Gabriel Origüen** · linkedin: www.linkedin.com/in/gabriel-origuen(#)
+
+---
+
+## Descripción
+
+Este framework implementa pruebas end-to-end utilizando el enfoque **BDD
+(Behavior Driven Development)** con Gherkin como lenguaje de especificación.
+Los escenarios están escritos en lenguaje natural y ejecutados por
+Behave + Playwright contra un entorno de demo en producción.
+
+La aplicación bajo test es un sistema real en producción.
+Demo y credenciales disponibles bajo solicitud.
+
+---
+
+## Stack Tecnológico
+
+| Herramienta | Rol |
+|-------------|-----|
+| Python 3.11+ | Lenguaje del framework |
+| Playwright | Automatización de browser |
+| Behave | Runner BDD — conecta Gherkin con Python |
+| Gherkin | Lenguaje de especificación de escenarios |
+| Allure | Reportes de ejecución |
+
+---
+
+## Estructura del proyecto
+## Estructura del proyecto
+
+StockFreezer-QA-AUTOMATION-Framework/
+│
+├── features/                  # Escenarios Gherkin (.feature)
+│   ├── auth/
+│   ├── inventory/
+│   ├── smart_validator/
+│   └── alerts/
+│
+├── steps/                     # Implementación Python de los steps
+├── pages/                     # Page Object Model
+├── support/
+│   ├── environment.py         # Hooks de Behave
+│   └── config.py              # Configuración del entorno
+│
+├── reports/                   # Reportes generados
+├── requirements.txt
+├── behave.ini
+└── README.md
+---
+
+## Áreas cubiertas
+
+- Autenticación y control de acceso por roles
+- Gestión de inventario (cajones y productos)
+- Validación semántica asistida por IA
+- Configuración de alertas de stock
+- Comportamiento de la UI ante estados límite
+
+---
+
+## Instalación
+
+```bash
+git clone https://github.com/Goriguen/StockFreezer-QA-AUTOMATION-Framework.git
+cd StockFreezer-QA-AUTOMATION-Framework
+
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+pip install -r requirements.txt
+playwright install
+
+---
+Ejecución
+
+# Todas las suites
+behave
+
+# Suite específica
+behave features/auth/
+
+# Con reporte Allure
+behave -f allure_behave.formatter:AllureFormatter -o reports/ features/
+allure serve reports/
+
+▎ Las credenciales de acceso al entorno de demo no están incluidas
+▎ en el repositorio. Contactar al autor para acceso.
+
+---
+Enfoque metodológico
+
+Ciclo BDD aplicado en cada escenario:
+
+1. Especificación — escenario en Gherkin que describe el comportamiento esperado
+2. Implementación — steps en Python que ejecutan las acciones en el browser
+3. Validación — assertions que verifican el resultado
+
+Cada escenario es independiente y parte de un estado limpio.
+
+---
+
+Autor
+
+Gabriel Origüen
+QA Automation · IA Analyst
+LinkedIn: www.linkedin.com/in/gabriel-origuen
+```
