@@ -25,6 +25,10 @@ test-results/
 [aA][gG][eE][nN][tT][sS].[mM][dD]
 **/[aA][gG][eE][nN][tT][sS].[mM][dD]
 
+# Claude Code (local only)
+CLAUDE.md
+.claude/
+
 # Logs
 *.log
 logs/
