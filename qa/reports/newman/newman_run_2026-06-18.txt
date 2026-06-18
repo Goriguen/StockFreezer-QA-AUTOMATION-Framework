@@ -1,0 +1,72 @@
+ newman
+
+StockFreezer QA Automation
+Run date: 2026-06-18
+Environment: demo.g-stockfreezer.com
+
+□ Auth
+└ Login Exitoso
+  POST https://demo.g-stockfreezer.com/api/auth/login [200 OK, 729B, 1042ms]
+  √  Status 200 - login exitoso
+  √  Response tiene token
+
+└ Login Fallido
+  POST https://demo.g-stockfreezer.com/api/auth/login [401 Unauthorized, 599B, 713ms]
+  √  Status 401 - credenciales inválidas
+  √  ok es false
+
+□ Crate
+└ Listar Cajones
+  GET https://demo.g-stockfreezer.com/api/crates [200 OK, 2.58kB, 681ms]
+  √  Status 200
+  √  ok es true
+
+└ Crear Cajon Exitoso
+  POST https://demo.g-stockfreezer.com/api/crates [201 Created, 787B, 636ms]
+  √  Status 201
+  √  Cajón creado con nombre correcto
+
+└ Crear Cajon sin TOKEN
+  POST https://demo.g-stockfreezer.com/api/crates [401 Unauthorized, 616B, 477ms]
+  √  Status 401 - sin token
+
+└ Crear Cajon GRID sin dimensiones
+  POST https://demo.g-stockfreezer.com/api/crates [400 Bad Request, 657B, 196ms]
+  √  Status 400 - GRID sin dimensiones
+  √  Error code correcto
+
+□ Product
+└ Listar Productos
+  GET https://demo.g-stockfreezer.com/api/productos [200 OK, 583B, 218ms]
+  √  Status 200
+  √  ok es true
+
+└ Agregar Producto a Cajon
+  POST https://demo.g-stockfreezer.com/api/productos/cajon/23 [201 Created, 747B, 228ms]
+  √  Status 201
+  √  Producto creado correctamente
+
+└ Retirar Producto
+  DELETE https://demo.g-stockfreezer.com/api/productos/70 [200 OK, 609B, 216ms]
+  √  Status 200 - producto retirado
+  √  ok es true
+
+┌─────────────────────────┬─────────────────────┬─────────────────────┐
+│                         │            executed │              failed │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│              iterations │                   1 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│                requests │                   9 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│            test-scripts │                  18 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│      prerequest-scripts │                   9 │                   0 │
+├─────────────────────────┼─────────────────────┼─────────────────────┤
+│              assertions │                  17 │                   0 │
+├─────────────────────────┴─────────────────────┴─────────────────────┤
+│ total run duration: 5.2s                                            │
+├─────────────────────────────────────────────────────────────────────┤
+│ total data received: 3.29kB (approx)                                │
+├─────────────────────────────────────────────────────────────────────┤
+│ average response time: 489ms [min: 196ms, max: 1042ms, s.d.: 282ms] │
+└─────────────────────────────────────────────────────────────────────┘
