@@ -1,0 +1,30 @@
+# Secretos y configuración local (SEGURIDAD CRÍTICA)
+.env
+*.postman_environment.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Reportes locales (excluidos del gitignore — son evidencia de portfolio)
+# qa/reports/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Agent Team Lite (Interno)
+.atl/
+[aA][gG][eE][nN][tT][sS].[mM][dD]
+**/[aA][gG][eE][nN][tT][sS].[mM][dD]
+
+# Logs
+*.log
+logs/
