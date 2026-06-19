@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def base_url():
     return os.environ.get("BASE_URL", "https://demo.g-stockfreezer.com")
 
