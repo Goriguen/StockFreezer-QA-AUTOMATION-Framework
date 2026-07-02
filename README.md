@@ -1,5 +1,7 @@
 # StockFreezer QA Automation Framework
 
+[![E2E Tests](https://github.com/Goriguen/StockFreezer-QA-AUTOMATION-Framework/actions/workflows/e2e.yml/badge.svg?branch=main)](https://github.com/Goriguen/StockFreezer-QA-AUTOMATION-Framework/actions/workflows/e2e.yml)
+
 Framework de automatización de pruebas para [G-StockFreezer](https://demo.g-stockfreezer.com) — sistema de gestión de inventario gastronómico con integración de IA.
 
 Desarrollado por **Gabriel Origüen** · [LinkedIn](https://www.linkedin.com/in/gabriel-origuen)
