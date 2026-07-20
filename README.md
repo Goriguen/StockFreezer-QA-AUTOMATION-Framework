@@ -14,6 +14,7 @@ Desarrollado por **Gabriel Origüen** · [LinkedIn](https://www.linkedin.com/in/
 |-------------|-----|
 | Python 3.12 | Lenguaje del framework |
 | pytest + requests | API testing automatizado |
+| pytest + Playwright | E2E testing automatizado a través de navegador real |
 | Postman + Newman CLI | Colección de API tests ejecutable por CLI |
 | Gherkin | Especificación BDD de escenarios de negocio |
 
@@ -25,9 +26,18 @@ Desarrollado por **Gabriel Origüen** · [LinkedIn](https://www.linkedin.com/in/
 StockFreezer-QA-AUTOMATION-Framework/
 │
 ├── tests/
-│   └── api/                        # Tests de API con pytest + requests
-│       ├── test_auth.py
-│       └── test_cajones.py
+│   ├── api/                        # Tests de API con pytest + requests, por dominio
+│   │   ├── auth/
+│   │   │   └── test_auth.py
+│   │   └── Crates/
+│   │       └── test_cajones.py
+│   └── e2e/                        # Tests E2E con Playwright (a través del navegador), por dominio
+│       ├── auth/
+│       │   └── test_login.py
+│       ├── alerts/
+│       │   └── test_alerts.py
+│       └── security/
+│           └── test_inventory.py
 │
 ├── qa/
 │   ├── features/                   # Especificaciones BDD en Gherkin
@@ -36,6 +46,9 @@ StockFreezer-QA-AUTOMATION-Framework/
 │   │   ├── alerts/                 # Alertas y umbrales de stock
 │   │   ├── ia/                     # Validación semántica con IA
 │   │   └── security/               # RBAC y seguridad
+│   ├── test-cases/                 # Test Cases manuales (CSV), un archivo por ticket
+│   │   └── api/crate/
+│   ├── bugs/                       # Reportes de bugs encontrados
 │   ├── postman/                    # Colección Postman (Newman)
 │   └── reports/
 │       └── newman/                 # Evidencia de ejecución
@@ -71,17 +84,28 @@ Creá un archivo `.env` en la raíz con las credenciales del entorno de prueba:
 BASE_URL=https://demo.g-stockfreezer.com
 TEST_USER=<usuario de prueba>
 TEST_PASS=<password>
+TEST_USER_GUEST=<usuario de prueba con rol GUEST>
+TEST_PASS_GUEST=<password>
 ```
 
 ---
 
 ## Ejecución
 
-### API tests con pytest
+### Tests de API (pytest + requests)
 
 ```bash
-pytest -v
+pytest tests/api/ -v
 ```
+
+### Tests E2E (pytest + Playwright)
+
+```bash
+playwright install --with-deps chromium
+pytest tests/e2e/ -v
+```
+
+> En el pipeline de CI (GitHub Actions, `.github/workflows/e2e.yml`) solo corren los tests de `tests/e2e/`. Los de `tests/api/` existen y corren bien en local, pero todavía no están integrados al workflow.
 
 ### Colección Newman
 
@@ -95,11 +119,17 @@ newman run "qa/postman/StockFreezer QA Automation.postman_collection.json" -e "q
 
 ## Enfoque metodológico
 
-Dos capas de testing complementarias:
+Capas de testing complementarias, con más pruebas rápidas y baratas abajo y menos pruebas lentas y costosas arriba (pirámide de testing):
 
 **1. Especificación BDD (Gherkin)** — escenarios en lenguaje de negocio que describen el comportamiento esperado del sistema. Independientes de la implementación técnica.
 
-**2. Automatización de API (pytest + Newman)** — ejecución automatizada contra el entorno demo real. Cada suite corre de forma independiente desde un estado limpio.
+**2. Automatización de API (pytest + requests, con colección Postman/Newman equivalente)** — tests rápidos, sin interfaz, contra el backend directo. Ideal para validaciones y casos de error puntuales.
+
+**3. Automatización E2E (pytest + Playwright)** — tests a través del navegador real, para validar UI y permisos visibles por rol que no se pueden verificar solo con la API.
+
+**4. Test Cases manuales (`qa/test-cases/`, CSV)** — casos todavía sin automatizar, documentados para ejecución manual y como registro de qué falta cubrir.
+
+Cada suite automatizada corre de forma independiente contra el entorno demo real, desde un estado limpio.
 
 ---
 
