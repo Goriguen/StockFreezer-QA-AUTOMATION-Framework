@@ -5,7 +5,8 @@ Feature: Gestion de Cajones - Creacion (SF-CRATE-001)
   Para certificar que el endpoint de creacion funciona correctamente
 
   Background:
-    Given el usuario tiene un rol valido para crear cajones
+    Given el usuario inicio sesion
+    and el usuariotiene un rol valido para crear cajones
 
   Scenario: Crear un cajon exitosamente
     When envia una solicitud POST al endpoint de cajones con nombre, tipo, capacidad y sector validos
